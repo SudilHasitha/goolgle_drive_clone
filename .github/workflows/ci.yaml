@@ -16,7 +16,7 @@ jobs:
       run: find . -type f -name ".env.example" -exec sh -c 'cp "$1" "${1%.example}"' _ {} \;
 
     - name: Type check
-      run: pnpm type-check
+      run: pnpm typecheck
 
     - name: Lint
       run: pnpm lint
