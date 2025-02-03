@@ -1,12 +1,16 @@
 import { type Config } from "drizzle-kit";
-
 import { env } from "~/env";
 
 export default {
   schema: "./src/server/db/schema.ts",
-  dialect: "sqlite",
+  dialect: "singlestore",
   dbCredentials: {
-    url: env.DATABASE_URL,
+    host: env.SINGLESTORE_HOST,
+    user: env.SINGLESTORE_USER,
+    password: env.SINGLESTORE_PASSWORD,
+    database: env.SINGLESTORE_DB_NAME,
+    port: parseInt(env.SINGLESTORE_PORT),
+    ssl: {},
   },
-  tablesFilter: ["google-drive_*"],
+  tablesFilter: ["db_sudil_*"],
 } satisfies Config;
