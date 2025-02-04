@@ -1,37 +1,54 @@
-import Link from "next/link";
+import Link from "next/link"
+import { Folder, FileText, Image } from "lucide-react"
 
-export default function HomePage() {
+const topLevelFolders = [
+  { name: "Documents", icon: Folder, path: "/documents" },
+  { name: "Images", icon: Folder, path: "/images" },
+  { name: "Work", icon: Folder, path: "/work" },
+]
+
+const mockFiles = [
+  { name: "Report.docx", icon: FileText, type: "file" },
+  { name: "Presentation.pptx", icon: FileText, type: "file" },
+  { name: "Profile.jpg", icon: Image, type: "file" },
+]
+
+export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <div>
+      <h1 className="text-2xl font-bold mb-4">My Drive</h1>
+
+      {/* Top-level folders */}
+      <div className="mb-8">
+        <h2 className="text-xl font-semibold mb-2">Folders</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {topLevelFolders.map((folder) => (
+            <Link href={folder.path} key={folder.name}>
+              <div className="bg-gray-800 p-4 rounded-md flex items-center cursor-pointer hover:bg-gray-700">
+                <folder.icon className="h-8 w-8 mr-2 text-blue-400" />
+                <span>{folder.name}</span>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
-    </main>
-  );
+
+      {/* Files */}
+      <div>
+        <h2 className="text-xl font-semibold mb-2">Files</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {mockFiles.map((file) => (
+            <div
+              key={file.name}
+              className="bg-gray-800 p-4 rounded-md flex items-center cursor-pointer hover:bg-gray-700"
+            >
+              <file.icon className="h-8 w-8 mr-2 text-blue-400" />
+              <span>{file.name}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 }
+
