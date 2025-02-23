@@ -1,54 +1,122 @@
-import Link from "next/link"
-import { Folder, FileText, Image } from "lucide-react"
+"use client";
 
-const topLevelFolders = [
-  { name: "Documents", icon: Folder, path: "/documents" },
-  { name: "Images", icon: Folder, path: "/images" },
-  { name: "Work", icon: Folder, path: "/work" },
-]
+import { useState } from "react";
+import { mockFiles } from "../lib/mock-data";
+import { Folder, FileIcon, Upload, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "~/components/ui/button";
 
-const mockFiles = [
-  { name: "Report.docx", icon: FileText, type: "file" },
-  { name: "Presentation.pptx", icon: FileText, type: "file" },
-  { name: "Profile.jpg", icon: Image, type: "file" },
-]
+export default function GoogleDriveClone() {
+  const [currentFolder, setCurrentFolder] = useState<string | null>(null);
 
-export default function Home() {
+  const getCurrentFiles = () => {
+    return mockFiles.filter((Folder) => Folder.parent === currentFolder);
+  };
+
+  const handleFolderClick = (folderId: string) => {
+    setCurrentFolder(folderId);
+  };
+
+  const getBreadcrumbs = () => {
+    const breadcrumbs = [];
+    let currentId = currentFolder;
+
+    while (currentId !== null) {
+      const folder = mockFiles.find((file) => file.id === currentId);
+      if (folder) {
+        breadcrumbs.unshift(folder);
+        currentId = folder.parent;
+      } else {
+        break;
+      }
+    }
+
+    return breadcrumbs;
+  };
+
+  const handleUpload = () => {
+    alert("Upload functionality would be implemented here");
+  };
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-4">My Drive</h1>
-
-      {/* Top-level folders */}
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">Folders</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {topLevelFolders.map((folder) => (
-            <Link href={folder.path} key={folder.name}>
-              <div className="bg-gray-800 p-4 rounded-md flex items-center cursor-pointer hover:bg-gray-700">
-                <folder.icon className="h-8 w-8 mr-2 text-blue-400" />
-                <span>{folder.name}</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      {/* Files */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Files</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {mockFiles.map((file) => (
-            <div
-              key={file.name}
-              className="bg-gray-800 p-4 rounded-md flex items-center cursor-pointer hover:bg-gray-700"
+    <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center">
+            <Button
+              onClick={() => setCurrentFolder(null)}
+              variant="ghost"
+              className="mr-2 text-gray-300 hover:text-white"
             >
-              <file.icon className="h-8 w-8 mr-2 text-blue-400" />
-              <span>{file.name}</span>
+              My Drive
+            </Button>
+            {getBreadcrumbs().map((folder, index) => (
+              <div key={folder.id} className="flex items-center">
+                <ChevronRight className="mx-2 text-gray-500" size={16} />
+                <Button
+                  onClick={() => handleFolderClick(folder.id)}
+                  variant="ghost"
+                  className="text-gray-300 hover:text-white"
+                >
+                  {folder.name}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <Button
+            onClick={handleUpload}
+            className="bg-blue-600 text-white hover:bg-blue-700"
+          >
+            <Upload className="mr-2" size={20} />
+            Upload
+          </Button>
+        </div>
+        <div className="rounded-lg bg-gray-800 shadow-xl">
+          <div className="border-b border-gray-700 px-6 py-4">
+            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
+              <div className="col-span-6">Name</div>
+              <div className="col-span-3">Type</div>
+              <div className="col-span-3">Size</div>
             </div>
-          ))}
+          </div>
+          <ul>
+            {getCurrentFiles().map((file) => (
+              <li
+                key={file.id}
+                className="hover:bg-gray-750 border-b border-gray-700 px-6 py-4"
+              >
+                <div className="grid grid-cols-12 items-center gap-4">
+                  <div className="col-span-6 flex items-center">
+                    {Folder.type === "folder" ? (
+                      <button
+                        onClick={() => handleFolderClick(file.id)}
+                        className="flex items-center text-gray-100 hover:text-blue-400"
+                      >
+                        <Folder className="mr-3" size={20} />
+                        {Folder.name}
+                      </button>
+                    ) : (
+                      <Link
+                        href={file.url ?? "#"}
+                        className="flex items-center text-gray-100 hover:text-blue-400"
+                      >
+                        <FileIcon className="mr-3" size={20} />
+                        {Folder.name}
+                      </Link>
+                    )}
+                  </div>
+                  <div className="col-span-3 text-gray-400">
+                    {Folder.type === "folder" ? "Folder" : "File"}
+                  </div>
+                  <div className="col-span-3 text-gray-400">
+                    {Folder.type === "folder" ? "--" : "2 MB"}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
-
