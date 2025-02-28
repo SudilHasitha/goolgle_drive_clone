@@ -1,5 +1,6 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
+import "server-only";
 
 import { index, singlestoreTableCreator, bigint } from "drizzle-orm/singlestore-core";
 import { int, text, singlestoreTable } from "drizzle-orm/singlestore-core";
