@@ -3,7 +3,7 @@
 import "server-only";
 
 import { index, singlestoreTableCreator, bigint } from "drizzle-orm/singlestore-core";
-import { int, text, singlestoreTable } from "drizzle-orm/singlestore-core";
+import { int, text } from "drizzle-orm/singlestore-core";
 
 export const createTables = singlestoreTableCreator(
   (name) => `db_sudil_drive_${name}`
