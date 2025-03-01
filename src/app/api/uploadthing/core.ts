@@ -23,7 +23,7 @@ export const ourFileRouter = {
       // This code runs on your server before upload
       const user = await auth();
 
-      // If you throw, the user will not be able to upload
+      //@typescript-eslint/only-throw-error
       if (!user.userId) throw new UploadThingError({
         message: "Unauthorized - User must be logged in",
         code: "FORBIDDEN",
