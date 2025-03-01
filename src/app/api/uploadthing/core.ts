@@ -23,12 +23,13 @@ export const ourFileRouter = {
       // This code runs on your server before upload
       const user = await auth();
 
-      //@typescript-eslint/only-throw-error
-      if (!user.userId) throw new UploadThingError({
-        message: "Unauthorized - User must be logged in",
-        code: "FORBIDDEN",
-      });
-
+      if (!user.userId) {
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        throw new UploadThingError({
+          message: "Unauthorized - User must be logged in",
+          code: "FORBIDDEN",
+        });
+      }
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.userId };
     })
