@@ -1,6 +1,6 @@
 import "server-only";
 
-import { files_table as filesSchema, folders_table as foldersSchema } from "~/server/db/schema";
+import { DB_FileType, files_table as filesSchema, folders_table as foldersSchema } from "~/server/db/schema";
 import { db } from "~/server/db";
 import { eq } from "drizzle-orm";
 
@@ -43,4 +43,10 @@ export function getFolders(folderId: number){
             .select()
             .from(foldersSchema)
             .where(eq(foldersSchema.parent, folderId));
+}
+
+export async function createFile(input:{
+    file: {name: string, url: string, size: number, parent: number},
+    userId: string}) {
+    return await db.insert(filesSchema).values({...input.file, parent: 1});
 }
