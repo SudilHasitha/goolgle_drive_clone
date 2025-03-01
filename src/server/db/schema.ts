@@ -9,7 +9,7 @@ export const createTables = singlestoreTableCreator(
   (name) => `db_sudil_drive_${name}`
 );
 
-export const files = createTables("files_table",{
+export const files_table = createTables("files_table",{
   id: bigint("id", {mode: "number", unsigned: true}).primaryKey().autoincrement(),
   name: text("name").notNull(),
   url: text("url").notNull(),
@@ -21,7 +21,7 @@ export const files = createTables("files_table",{
   ]
 })
 
-export const folders = createTables("folders_table",{
+export const folders_table = createTables("folders_table",{
   id: bigint("id", {mode: "number", unsigned: true}).primaryKey().autoincrement(),
   name: text("name").notNull(),
   parent: bigint("parent", {mode: "number", unsigned: true})
