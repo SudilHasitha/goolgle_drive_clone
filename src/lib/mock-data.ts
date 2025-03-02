@@ -1,5 +1,6 @@
 export interface File {
   id: string;
+  owner_id: string;
   name: string;
   type: "file";
   url: string;
@@ -9,22 +10,24 @@ export interface File {
 
 export type Folder = {
   id: string;
+  owner_id: string;
   name: string;
   type: "folder";
   parent: string | null;
 };
 
 export const mockFolders: Folder[] = [
-  { id: "root", name: "root", type: "folder", parent: null },
-  { id: "1", name: "Documents", type: "folder", parent: "root" },
-  { id: "2", name: "Images", type: "folder", parent: "root" },
-  { id: "3", name: "Work", type: "folder", parent: "root" },
-  { id: "4", name: "Presentations", type: "folder", parent: "3" },
+  { id: "root", owner_id: "1", name: "root", type: "folder", parent: null },
+  { id: "1", owner_id: "1", name: "Documents", type: "folder", parent: "root" },
+  { id: "2", owner_id: "1", name: "Images", type: "folder", parent: "root" },
+  { id: "3", owner_id: "1", name: "Work", type: "folder", parent: "root" },
+  { id: "4", owner_id: "1", name: "Presentations", type: "folder", parent: "3" },
 ];
 
 export const mockFiles: File[] = [
   {
     id: "4",
+    owner_id: "1",
     name: "Resume.pdf",
     type: "file",
     url: "/files/resume.pdf",
@@ -33,6 +36,7 @@ export const mockFiles: File[] = [
   },
   {
     id: "5",
+    owner_id: "1",
     name: "Project Proposal.docx",
     type: "file",
     url: "/files/proposal.docx",
@@ -41,6 +45,7 @@ export const mockFiles: File[] = [
   },
   {
     id: "6",
+    owner_id: "1",
     name: "Vacation.jpg",
     type: "file",
     url: "/files/vacation.jpg",
@@ -49,6 +54,7 @@ export const mockFiles: File[] = [
   },
   {
     id: "7",
+    owner_id: "1",
     name: "Profile Picture.png",
     type: "file",
     url: "/files/profile.png",
@@ -57,6 +63,7 @@ export const mockFiles: File[] = [
   },
   {
     id: "9",
+    owner_id: "1",
     name: "Q4 Report.pptx",
     type: "file",
     url: "/files/q4-report.pptx",
@@ -65,6 +72,7 @@ export const mockFiles: File[] = [
   },
   {
     id: "10",
+    owner_id: "1",
     name: "Budget.xlsx",
     type: "file",
     url: "/files/budget.xlsx",

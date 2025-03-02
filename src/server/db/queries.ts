@@ -45,8 +45,19 @@ export function getFolders(folderId: number){
             .where(eq(foldersSchema.parent, folderId));
 }
 
+export async function getFolderById(folderId: number){
+    const folder = await db
+        .select()
+        .from(foldersSchema)
+        .where(eq(foldersSchema.id, folderId));
+    if (!folder[0]) {
+        throw new Error("Folder not found");
+    }
+    return folder[0];
+}
+
 export async function createFile(input:{
     file: {name: string, url: string, size: number, parent: number},
     userId: string}) {
-    return await db.insert(filesSchema).values({...input.file, parent: 1});
+    return await db.insert(filesSchema).values({...input.file, owner_id: input.userId});
 }

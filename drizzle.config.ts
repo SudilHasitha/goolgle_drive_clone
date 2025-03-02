@@ -12,5 +12,5 @@ export default {
     port: parseInt(env.SINGLESTORE_PORT),
     ssl: {},
   },
-  // tablesFilter: ["db_sudil_drive_*"],
+  tablesFilter: ["db_sudil_drive_*"],
 } satisfies Config;
