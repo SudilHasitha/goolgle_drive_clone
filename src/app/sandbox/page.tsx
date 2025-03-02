@@ -25,8 +25,7 @@ export default function SandboxPage(){
 
                     // insert mockdata to db
                     const folderInsert = await db.insert(folders_table).values(
-                        mockFolders.map((folder, index) => ({
-                            id: index + 1,
+                        mockFolders.map((folder) => ({
                             owner_id: user.userId,
                             name: folder.name,
                             parent: rootFolder[0]!.id,

@@ -1,4 +1,4 @@
-import DriveContents from "../../drive-contents";
+import DriveContents from "./drive-contents";
 import { getFolders, getFiles, getAllParentsForFolder } from "~/server/db/queries";
 
 
