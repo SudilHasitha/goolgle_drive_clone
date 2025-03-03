@@ -10,7 +10,7 @@ export default function SandboxPage(){
             <form
                 action={async () => {
                     "use server";
-                    console.log("Seeding......");
+                    // console.log("Seeding......");
                     const user = await auth();
 
                     if(!user.userId){
@@ -42,9 +42,9 @@ export default function SandboxPage(){
                     //         parent: (index % 3) + 1,
                     //     })),
                     // );
-                    console.log("Output of mock data addition to DB ......");
+                    // console.log("Output of mock data addition to DB ......");
 
-                    console.log(folderInsert);
+                    // console.log(folderInsert);
                     // console.log(fileInsert);
 
                 }}    

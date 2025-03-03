@@ -24,10 +24,10 @@ export async function deleteFiles(fileId: number) {
     }
 
     const utAPIResults = await utAPI.deleteFiles([file?.url.replace("https://utfs.io/f/","")]);
-    console.log(utAPIResults);
+    // console.log(utAPIResults);
 
     const dbDeleteResults = await db.delete(files_table).where(eq(files_table.id, fileId));
-    console.log(dbDeleteResults);
+    // console.log(dbDeleteResults);
 
     const c = await cookies();
     c.set("force-refresh", JSON.stringify({forceRefresh: true}));

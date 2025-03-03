@@ -68,14 +68,42 @@ export async function getRootFolder(userId: string){
                 isNull(foldersSchema.parent)
             )
         );
-    if (!folder[0]) {
-        throw new Error("Root folder not found");
-    }
-    return folder[0].id;
+    return folder[0];
 }
 
 export async function createFile(input:{
     file: {name: string, url: string, size: number, parent: number},
     userId: string}) {
     return await db.insert(filesSchema).values({...input.file, owner_id: input.userId});
+}
+
+export async function onBoardUser(userId: string) {
+    const rootFolder = await db.insert(foldersSchema).values({
+        name: "root",
+        owner_id: userId,
+        parent: null,
+    }).$returningId();
+
+
+    // Insert basic folders
+    await db.insert(foldersSchema).values([{
+        name: "Documents",
+        owner_id: userId,
+        parent: rootFolder[0]!.id,
+    },{ 
+        name: "Images",
+        owner_id: userId,
+        parent: rootFolder[0]!.id,
+    },{
+        name: "Videos",
+        owner_id: userId,
+        parent: rootFolder[0]!.id,
+    },{
+        name: "Music",
+        owner_id: userId,
+        parent: rootFolder[0]!.id,
+    }]);
+
+    return rootFolder[0]
+
 }
