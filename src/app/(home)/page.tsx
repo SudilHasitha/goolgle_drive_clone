@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { ArrowRight, Cloud, Lock, Share2 } from "lucide-react"
 import { auth } from "@clerk/nextjs/server"
-import { redirect } from "next/navigation"
 import { SignInButton } from "@clerk/nextjs"
 
 function LandingPage() {

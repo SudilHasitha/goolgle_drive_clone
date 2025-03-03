@@ -1,6 +1,6 @@
 import {db} from "~/server/db";
-import { mockFolders, mockFiles } from "~/lib/mock-data";
-import { files_table, folders_table } from "~/server/db/schema";
+import { mockFolders } from "~/lib/mock-data";
+import { folders_table } from "~/server/db/schema";
 import { auth } from "@clerk/nextjs/server";
 
 export default function SandboxPage(){
