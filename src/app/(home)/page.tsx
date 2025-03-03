@@ -56,8 +56,13 @@ function LandingPage() {
   )
 }
 
-// @ts-expect-error
-function FeatureCard({ icon, title, description }) {
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
     <div className="bg-gray-800 p-6 rounded-lg">
       <div className="flex justify-center mb-4">{icon}</div>
