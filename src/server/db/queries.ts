@@ -2,7 +2,7 @@ import "server-only";
 
 import { files_table as filesSchema, folders_table as foldersSchema } from "~/server/db/schema";
 import { db } from "~/server/db";
-import { eq } from "drizzle-orm";
+import { eq, and, isNull } from "drizzle-orm";
 
 export async function getAllParentsForFolder(folderId: number) {
     const parents = []
@@ -56,6 +56,22 @@ export async function getFolderById(folderId: number){
         throw new Error("Folder not found");
     }
     return folder[0];
+}
+
+export async function getRootFolder(userId: string){
+    const folder = await db
+        .select()
+        .from(foldersSchema)
+        .where(
+            and(
+                eq(foldersSchema.owner_id, userId),
+                isNull(foldersSchema.parent)
+            )
+        );
+    if (!folder[0]) {
+        throw new Error("Root folder not found");
+    }
+    return folder[0]!.id;
 }
 
 export async function createFile(input:{

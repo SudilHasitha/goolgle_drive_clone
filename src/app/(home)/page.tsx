@@ -3,14 +3,19 @@ import { ArrowRight, Cloud, Lock, Share2 } from "lucide-react"
 import { auth } from "@clerk/nextjs/server"
 import { SignInButton } from "@clerk/nextjs"
 
-function LandingPage() {
+interface LandingPageProps {
+  rootFolder: string | null;
+}
+
+function LandingPage({ rootFolder }:LandingPageProps) {
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-gray-800 p-4">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold">DriveClon</h1>
           <nav>
-            <Link href="/f/2251799813685250" className="text-blue-400 hover:text-blue-300">
+            <Link href={`$/f/${rootFolder}`} className="text-blue-400 hover:text-blue-300">
               Go to Drive
             </Link>
           </nav>
@@ -22,7 +27,7 @@ function LandingPage() {
           <h2 className="text-4xl font-bold mb-4">Welcome to DriveClon</h2>
           <p className="text-xl mb-8">Secure cloud storage for all your files</p>
           <Link
-            href="/f/2251799813685250"
+            href={`$/f/${rootFolder}`}
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded inline-flex items-center"
           >
             Get Started
@@ -80,7 +85,7 @@ export default async function Page() {
     <SignInButton />
   }
 
-  return <LandingPage />
+  return <LandingPage rootFolder = {user.userId} />
 }
 
 
