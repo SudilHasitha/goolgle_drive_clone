@@ -71,7 +71,7 @@ export async function getRootFolder(userId: string){
     if (!folder[0]) {
         throw new Error("Root folder not found");
     }
-    return folder[0]!.id;
+    return folder[0].id;
 }
 
 export async function createFile(input:{
