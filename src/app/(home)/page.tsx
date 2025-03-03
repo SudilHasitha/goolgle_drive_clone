@@ -56,7 +56,7 @@ function LandingPage() {
   )
 }
 
-// @ts-ignore
+// @ts-expect-error
 function FeatureCard({ icon, title, description }) {
   return (
     <div className="bg-gray-800 p-6 rounded-lg">
