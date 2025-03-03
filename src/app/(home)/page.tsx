@@ -1,13 +1,17 @@
 import type React from "react"
 import Link from "next/link"
 import { ArrowRight, Cloud, Lock, Share2 } from "lucide-react"
-import { auth } from "@clerk/nextjs/server"
+import { auth} from "@clerk/nextjs/server"
 import { SignInButton } from "@clerk/nextjs"
 import { getRootFolder, onBoardUser } from "~/server/db/queries"
 
+interface ClerkUser {
+  userId: string;
+}
+
 interface LandingPageProps {
-  rootFolder: number | null
-  user: any | null
+  rootFolder: number | null;
+  user: ClerkUser | null;
 }
 
 function LandingPage({ rootFolder, user }: LandingPageProps) {
@@ -48,7 +52,9 @@ function LandingPage({ rootFolder, user }: LandingPageProps) {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           ) : (
-            <div className="inline-flex items-center rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+            <div 
+              className="inline-flex items-center rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+          >
               <SignInButton
                 forceRedirectUrl={"/"}
               />
@@ -103,14 +109,14 @@ function FeatureCard({ icon, title, description }: FeatureCardProps) {
 export default async function Page() {
   const user = await auth()
 
-  if (user.userId) {
+  if (user?.userId) {
     const rootFolder = await getRootFolder(user.userId)
 
-    if (rootFolder && rootFolder.id) {
+    if (rootFolder?.id) {
       return <LandingPage rootFolder={rootFolder.id} user={user} />
     } else if (!rootFolder && user) {
       const newRootFolder = await onBoardUser(user.userId)
-      if (newRootFolder && newRootFolder.id) {
+      if (newRootFolder?.id) {
         return <LandingPage rootFolder={newRootFolder.id} user={user} />
       }
     }
