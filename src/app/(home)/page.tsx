@@ -56,7 +56,8 @@ function LandingPage() {
   )
 }
 
-function FeatureCard({ icon, title, description }:any) {
+// @ts-ignore
+function FeatureCard({ icon, title, description }) {
   return (
     <div className="bg-gray-800 p-6 rounded-lg">
       <div className="flex justify-center mb-4">{icon}</div>
